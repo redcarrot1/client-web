@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Request Info</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+<h1>클라이언트 요청 정보</h1>
+<ul>
+  <li><strong>IP:</strong> <span th:text="${info.ip}"></span></li>
+  <li><strong>Port:</strong> <span th:text="${info.port}"></span></li>
+  <li><strong>Path:</strong> <span th:text="${info.path}"></span></li>
+</ul>
+
+<h2>Headers</h2>
+<table border="1">
+  <thead>
+  <tr>
+    <th>헤더 이름</th>
+    <th>값</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="entry : ${info.headers}">
+    <td th:text="${entry.key}"></td>
+    <td th:text="${entry.value}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
