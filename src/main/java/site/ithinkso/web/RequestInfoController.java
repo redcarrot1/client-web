@@ -3,11 +3,15 @@ package site.ithinkso.web;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.IOException;import java.util.Enumeration;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Map;import java.util.Optional;import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class RequestInfoController {
@@ -23,26 +27,29 @@ public class RequestInfoController {
     public String postRequestInfo(HttpServletRequest request, Model model) throws IOException {
         RequestInfo info = createBasicRequestInfo(request);
 
-        String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        info.setBody(body);
+        info.setBody(
+                request.getReader()
+                        .lines()
+                        .collect(Collectors.joining(System.lineSeparator()))
+        );
 
         model.addAttribute("info", info);
         return "request-info";
     }
 
     private RequestInfo createBasicRequestInfo(HttpServletRequest request) {
-       String ip = Optional.ofNullable(request.getHeader("X-Forwarded-For"))
-                      .orElse(request.getRemoteAddr());
-       int port = request.getRemotePort();
-       String path = request.getRequestURI();
+        String ip = Optional.ofNullable(request.getHeader("X-Forwarded-For"))
+                .orElse(request.getRemoteAddr());
+        int port = request.getRemotePort();
+        String path = request.getRequestURI();
 
-       Map<String, String> headers = new HashMap<>();
-       Enumeration<String> headerNames = request.getHeaderNames();
-       while (headerNames.hasMoreElements()) {
-         String name = headerNames.nextElement();
-         headers.put(name, request.getHeader(name));
-       }
+        Map<String, String> headers = new HashMap<>();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String name = headerNames.nextElement();
+            headers.put(name, request.getHeader(name));
+        }
 
-       return new RequestInfo(ip, port, path, headers);
-   }
+        return new RequestInfo(ip, port, path, headers);
+    }
 }
