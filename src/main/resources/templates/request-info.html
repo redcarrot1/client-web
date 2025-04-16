@@ -9,13 +9,15 @@
 <body>
 <div class="container mt-5">
     <h1 class="mb-4">Client Request Information</h1>
-
+    <button class="w-50 btn btn-primary btn-md" onclick="location.href='/live'">Live Log</button>
+    <br/><br/>
     <div class="card mb-4">
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>IP: </strong> <span th:text="${info.ip}"></span></li>
                 <li class="list-group-item"><strong>Port: </strong> <span th:text="${info.port}"></span></li>
                 <li class="list-group-item"><strong>Path: </strong> <span th:text="${info.path}"></span></li>
+                <li class="list-group-item"><strong>Timestamp: </strong> <span th:text="${#temporals.format(info.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></span></li>
             </ul>
         </div>
     </div>

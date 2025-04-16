@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Request History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Login History</h1>
+    <button class="w-50 btn btn-warning btn-md" onclick="location.href='/admin'">Home</button>
+    <br/><br/>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>IP</th>
+            <th>Port</th>
+            <th>correct</th>
+            <th>inputPassword</th>
+            <th>Timestamp</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="record : ${records}">
+            <td th:text="${record.ip}"></td>
+            <td th:text="${record.port}"></td>
+            <td th:text="${record.correct}"></td>
+            <td th:text="${record.inputPassword}"></td>
+            <td th:text="${#temporals.format(record.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
